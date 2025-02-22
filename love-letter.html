@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moje uczucia</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #fde2e4;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.5em;
+            color: #333;
+            max-width: 800px;
+            transition: opacity 1s, transform 1s;
+        }
+        img {
+            width: 500px;
+            height: 300px;
+            object-fit: contain;
+            display: block;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: opacity 1s;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6b6b;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #e05555;
+            transform: scale(1.1);
+        }
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.8) rotate(-5deg);
+        }
+        audio {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Co czuję do Ciebie</h1>
+    <p id="text">Szczerość prosto z serca bo chciałem ci to powiedzieć ale wole napisać abyś miała to na papierze</p>
+    <img id="photo" src="images/default.jpg">
+    <button onclick="changeContent()">Następna myśl</button>
+    <audio autoplay loop>
+        <source src="Jan.mp3" type="audio/mpeg">
+        Twoja przeglądarka nie obsługuje odtwarzacza audio.
+    </audio>
+
+    <script>
+        const thoughts = [
+            "1. Hej, wiem że to trochę dziwny sposób żeby ci wszystko powiedzieć ale wole tak się określić jak nie chciałaś przyjąć normalnie słoiczka (więc zrobiłem tą stronę). Pisze to akurat po tym jak napisałaś że idziesz się napić w wwa co mnie cieszy że spędzisz sobie miło czas w warszawie, Ale nie powiem że nie jestem zazdrosny z wiadomego powodu, martwię się że cię stracę. ",
+            "2. Wiem że zachowywałem się jak śmieć w wielu sytuacjach i wczorajsza noc mnie bardziej uświadomiła jak bardzo zjebałem, nie wyobrażam sobie jak bardzo mogłem cię skrzywdzić i jak okropnie się czułaś. Przepraszam jeszcze raz za to choć wiem że to mało zmieni ale chce naprawdę przeprosić bo nie sądziłem jak bardzo to mogło bolec. ",
+            "3. Jednak chciałem ci tu napisać to co czuję, niedziwnie się że nie chcesz wrócić tbh, zachowywałem się jak najgorszy śmieć, bardzo, bardzo bardzo. Wiem jednak ile dla mnie znaczysz i wiem o tym co myślę o tobie i myślę o tym bardzo, nie chce cie ani trochę stracić. Kocham cię naprawdę mocno, brakuje mi ciebie choć wiem że nie jesteśmy razem tylko kilka dni ale to są najbardziej bolesne kilka dni jakie mialem w swoim życiu.",
+            "4. Jesteś dla mnie najważniejsza osoba jaka kiedykolwiek poznałem i dzięki tobie zrozumiałem co znaczy kochać i co znaczy walczyć, pomimo twojego stwierdzenia ze nie chcesz wrócić to i tak walczę dalej bo zależy mi na tobie, na nas. Brakuje mi ciebie strasznie i zrobiłbym wszystko aby cofnąć czas i po prostu móc się do ciebie przytulić i po prostu powiedzieć że cie kocham, brakuje mi tego wszystkiego, brakuje mi uczucia że mam dla kogo żyć i wiem że mówiłaś że mogę żyć dla kogoś innego itp. Rzecz w tym że nie chce żyć dla kogoś innego, chce tylko ciebie. Nikogo więcej.",
+            "5. Przepraszam cie za to wszystko co zrobiłem i wiem ze proszę o za dużo ale chciałem ta ostatnia szanse aby cie nie stracić, martwię się o wszystko bo boje się ze ciebie stracę, rozrywa mnie to od środka. Kocham cie bardzo i chce żyć z tobą abyśmy mogli razem budować stabilna przyszłość. Chce z tobą zamieszkać i żyć w spokoju. Kocham cie bardzo i chciałem ci to wszystko powiedzieć w tej formie abyś miała to wszystko na papierze bo nie zależy mi na kimś innym tak bardzo jak na tobie. Dosłownie zacząłem pisać strony tylko po to aby dotrzeć do ciebie niż żeby pisać wiadomości…",
+            "6. Mówiąc już krótko bo nie chce ci zajmować dużej ilości czasu, Kocham cie bardzo Julka i tęsknię za tobą, chce wrócić, chce żyć z tobą, chce być szczęśliwy z tobą, chce być smutny z tobą, chce z tobą szaleć, mówiąc krotko chce z tobą wszystko… dlatego proszę wróćmy do siebie… Kocham cie bardzo. Mikołaj"
+        ];
+
+        const photoFolder = "images/";
+        const numPhotos = 8;
+        const photoExtensions = ['jpg', 'png', 'jpeg'];
+
+        let currentIndex = 0; // Licznik do przechodzenia przez teksty
+
+        function getRandomPhoto() {
+            const randomIndex = Math.floor(Math.random() * numPhotos) + 1;
+            for (let ext of photoExtensions) {
+                let imgPath = `${photoFolder}photo${randomIndex}.${ext}`;
+                let img = new Image();
+                img.src = imgPath;
+                img.onload = () => document.getElementById("photo").src = imgPath;
+                img.onerror = () => document.getElementById("photo").src = "images/default.jpg";
+            }
+        }
+
+        function changeContent() {
+            const textElement = document.getElementById("text");
+            const photoElement = document.getElementById("photo");
+
+            // Animacja zanikania
+            textElement.classList.add("fade-out");
+            photoElement.classList.add("fade-out");
+
+            setTimeout(() => {
+                // Jeśli doszliśmy do końca tablicy, wróć do początku
+                if (currentIndex >= thoughts.length) {
+                    currentIndex = 0;
+                }
+
+                // Ustaw tekst i zdjęcie
+                textElement.textContent = thoughts[currentIndex];
+                getRandomPhoto();
+
+                // Zwiększ licznik
+                currentIndex++;
+
+                // Animacja pojawiania się
+                textElement.classList.remove("fade-out");
+                photoElement.classList.remove("fade-out");
+            }, 1000); // Czekaj 1 sekundę na animację zanikania
+        }
+    </script>
+</body>
+</html>

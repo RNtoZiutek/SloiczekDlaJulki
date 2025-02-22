@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WażnySłoiczek</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #fde2e4;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            transition: background 0.5s;
+            position: relative; /* Dodane dla pozycjonowania serduszek */
+        }
+        h1 {
+            font-size: 3.5em;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            transition: transform 0.5s;
+            position: absolute;
+            top: 10%;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .red { background-color: #ff6b6b; color: white; }
+        .green { background-color: #6bcf6b; color: white; }
+        .blue { background-color: #6b8cff; color: white; }
+        #message {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #333;
+            opacity: 0;
+            transition: opacity 0.5s;
+            position: relative;
+        }
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: red;
+            opacity: 1;
+            animation: floatUp 1.5s ease-out forwards;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-50px) scale(0.5); opacity: 0; }
+        }
+        .text-link {
+            font-size: 1.2em;
+            color: #ff6b6b;
+            text-decoration: none;
+            margin-top: 30px;
+            position: absolute;
+            bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Słoiczek z różnościami</h1>
+    <button class="red" onclick="showMessage(compliments)">Komplement</button>
+    <button class="green" onclick="showMessage(memories)">Wspomnienie</button>
+    <button class="blue" onclick="showMessage(plans)">Plan na przyszłość</button>
+    <p id="message"></p>
+    
+    <a href="love-letter.html" class="text-link">Czysta szczerość...</a>
+    
+    <script>
+        const compliments = [
+            "Uwielbiam twój krzywy nos którego tak bardzo nienawidzisz",
+            "Jesteś i będziesz dla mnie najpiękniejsza i najważniejszą osobą na świecie",
+            "Uwielbiam jak bawimy i denerwujemy się nawzajem",
+            "Pomimo tego że rzadko gotujesz to masz kilka dań w których moge ci gałe zrobić bo wiem że nie zrobie tego lepiej niż ty",
+            "Nie ma lepszej poduszki niż twoje 2 mleczaki",
+            "Zawsze mnie cieszy to że jesteś tak inteligenta",
+            "Nigdy nie chce cię zmienić na kogoś innego bo wiem że jesteś idealna",
+            "Pomimo tego że nie lubie jak siedzisz cicho, to uwielbiam patrzeć na ciebie jak śpisz bo widzę wtedy niewinontko które kocham nad życie",
+            "Kocham twoje ciało i uwielbiam leżeć z tobą i oglądać tiktoki nawet gdy nic nie robimy",
+            "Jesteś bardzo czuła i bardzo wrażliwa i za to cię uwielbiam",
+            "NIKT NIGDY NIE BĘDZIE W MOICH OCZACH LEPSZY OD CIEBIE",
+            "Chciałbym z tobą wszystko..."
+        ];
+
+        const memories = [
+            "Nasz pierwsza randka gdzie na samym początku było ciężko ale przez mój cichy styl mówienia zaczeło się to wszystko",
+            "Gdzie na 1 randce zamiast jeść w kanjpie zjedliśmy w żabce przez to że nie było twoich sajgonek",
+            "To gdzie po krótkim czasie byłem w stanie powiedzieć że zajebałem się w tobie, i do tej pory nieżałuje tego zdania i cieszy mnie że tak się stało",
+            "Gdzie dzięki tobie zacząłem przyzyczajać się do obecności psów których nie lubiłem",
+            "Nasz wspólny wypad na randkę w warszawie gdzie",
+            "Nasza kawa u ciebie gdzie było zimno i pomimo tego że nie miałem pieniędzy to i tak kupiłas mi kawe tylko po to abyśmy mogli razem się napić",
+            "Każde wspólne gotowanie sushi gdzie w większości tylko pilnuje ryżu który i tak czasem spierdole xd",
+            "Jedzenie wspólnych obiadków u matuli i narzekanie na to że jest chujowy",
+            "To gdy byłem chory to przyjechałaś do nie aby się mną zająć",
+            "Wspólne składanie lego",
+            "Oglądanie bajek oraz filmów razem",
+            "Wspólne kąpiele gdzie się bawiliśmy i denerwowaliśmy nawzajem",
+            "Każde wspólne spędzanie czasu jest dla mnie wspaniałą rzeczą pomimo tego że wygladają bardzo podobnie to i tak ciesze się z każdego bardzo mocno..."];
+
+        const plans = [
+            "Wyprowadźka do Łodźi",
+            "Skończenie studiów i założenie rodziny",
+            "Przde wszystkim chęć wzięcia cię za żone...",
+            "Zrobienie powtórki randki Łuków",
+            "Chęć do tego żeby umrzeć przy tobie w spokoju...",
+            "Powiedzieć: Ty stara kurwa zmarnowałaś mi 20 lat życia...",
+            "Wybór mebli do wspólnego domu/mieszkania gdy kupimy własne",
+            "Posiadanie wspólnego zwierzaka",
+            "Wyjzd za granice",
+            "Wspólne wakacje nawet na działce po prostu ważne że z tobą"];
+
+        function showMessage(array) {
+            const messageElement = document.getElementById("message");
+            const randomMessage = array[Math.floor(Math.random() * array.length)];
+            messageElement.textContent = randomMessage;
+            messageElement.style.opacity = 1;
+            createHearts(messageElement);
+        }
+
+        function createHearts(element) {
+            const rect = element.getBoundingClientRect(); // Pobierz pozycję i rozmiar elementu
+            const centerX = rect.left + rect.width / 2; // Środek zdania (oś X)
+            const centerY = rect.top + rect.height / 2; // Środek zdania (oś Y)
+
+            for (let i = 0; i < 10; i++) { // Więcej serduszek dla lepszego efektu
+                const heart = document.createElement("span");
+                heart.textContent = "❤️";
+                heart.classList.add("heart");
+
+                // Ustaw pozycję serduszka na środku zdania
+                heart.style.left = `${centerX + (Math.random() - 0.5) * 50}px`; // Losowe przesunięcie w poziomie
+                heart.style.top = `${centerY + (Math.random() - 0.5) * 50}px`; // Losowe przesunięcie w pionie
+
+                document.body.appendChild(heart); // Dodaj serduszko do body
+                setTimeout(() => heart.remove(), 1500); // Usuń serduszko po animacji
+            }
+        }
+    </script>
+</body>
+</html>
